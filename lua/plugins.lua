@@ -156,4 +156,4 @@ local function startup(use)
   end
 end
 
-require("packer").startup({ startup, config })
+require("packer").startup({ startup, config = config })
