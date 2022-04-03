@@ -31,7 +31,7 @@ local config = {
 
 local function startup(use)
   use 'wbthomason/packer.nvim'
-  use 'dstein64/vim-startuptime'
+  use { 'dstein64/vim-startuptime', cmd = { "StartupTime" } }
   use 'sheerun/vim-polyglot'
 
   use {
@@ -41,7 +41,7 @@ local function startup(use)
 
   use {
     "folke/which-key.nvim",
-    -- event = "VimEnter",
+    event = "VimEnter",
     config = [[require("config.keys")]],
   }
 
@@ -53,32 +53,38 @@ local function startup(use)
 
   use {
     'akinsho/bufferline.nvim',
+    event = "BufReadPre",
     config = theme.bufferline,
   }
 
   use {
     'nvim-lualine/lualine.nvim',
+    event = "BufReadPre",
     after = 'onedark.nvim',
     config = theme.lualine,
   }
 
   use {
+    'lukas-reineke/indent-blankline.nvim',
+    event = "BufReadPre",
+    config = function()
+      require("indent_blankline").setup({})
+    end,
+  }
+
+  use {
     'kyazdani42/nvim-tree.lua',
+    opt = true,
+    cmd = { "NvimTreeToggle", "NvimTreeRefresh", },
     config = theme.nvim_tree,
   }
 
   use {
     'lewis6991/gitsigns.nvim',
+    event = "BufReadPre",
     config = function()
       require('gitsigns').setup({})
     end
-  }
-
-  use {
-    'lukas-reineke/indent-blankline.nvim',
-    config = function()
-      require("indent_blankline").setup({})
-    end,
   }
 
   use {
@@ -98,6 +104,13 @@ local function startup(use)
 
   use {
     'nvim-telescope/telescope.nvim',
+    opt = true,
+    cmd = { "Telescope" },
+    module = { "telescope" },
+    wants = {
+      'plenary.nvim',
+      'telescope-fzf-native.nvim',
+    },
     requires = {
       'nvim-lua/plenary.nvim',
       { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
@@ -107,6 +120,7 @@ local function startup(use)
 
   use {
     'ludovicchabant/vim-gutentags',
+    event = "BufReadPre",
     config = function()
       vim.cmd([[
         " gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
@@ -134,6 +148,9 @@ local function startup(use)
 
   use {
     'hrsh7th/nvim-cmp',
+    event = "InsertEnter",
+    opt = true,
+    wants = {"LuaSnip"},
     requires = {
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-nvim-lua',
@@ -147,7 +164,9 @@ local function startup(use)
 
   use {
     'neovim/nvim-lspconfig',
-    after = 'nvim-cmp',
+    event = "BufReadPre",
+    opt = true,
+    wants = {"cmp-nvim-lsp"},
     config = [[require("config.lsp")]],
   }
 
