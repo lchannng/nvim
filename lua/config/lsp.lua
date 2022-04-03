@@ -11,7 +11,15 @@ local servers = {
   gopls = {},
 
   -- lua
-  sumneko_lua = {},
+  sumneko_lua = {
+    settings = {
+      Lua = {
+        diagnostics = {
+          globals = { 'vim' }
+        }
+      }
+    }
+  },
 
   -- python
   pyright = {},
