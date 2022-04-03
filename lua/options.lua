@@ -155,12 +155,12 @@ set viminfo^=%
 
 " 允许 Vim 自带脚本根据文件类型自动设置缩进等
 if has('autocmd')
-    filetype plugin indent on
+  filetype plugin indent on
 endif
 
 if has('syntax')
-    syntax enable
-    syntax on
+  syntax enable
+  syntax on
 endif
 
 " 设置分隔符可视
