@@ -51,12 +51,6 @@ function M.bufferline()
         duplicate = no_italic,
       },
     })
-  local keymaps = require("keymaps")
-  for i = 0, 9 do
-    local lhs = string.format("<leader>%d", i)
-    local rhs = string.format("<cmd>BufferLineGoToBuffer %d<CR>", i)
-    keymaps.noremap(lhs, rhs)
-  end
 end
 
 function M.lualine()
@@ -90,9 +84,6 @@ function M.nvim_tree()
     folder_arrows = 1,
   }
   require'nvim-tree'.setup {}
-  local keymaps = require("keymaps")
-  keymaps.noremap('<F2>', ':NvimTreeToggle<CR>')
-  keymaps.noremap('<F3>', ':NvimTreeRefresh<CR>')
 end
 
 return M

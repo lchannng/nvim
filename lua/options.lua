@@ -1,10 +1,11 @@
 --[[--
-File  : basic.lua
+File  : options.lua
 Author: lchannng <l.channng@gmail.com>
 Date  : 2022/03/31 22:44:07
---]]--
+--]] --
 
 local vim = vim
+local cmd = vim.cmd
 local o = vim.o
 
 -- 自动缩进
@@ -16,10 +17,10 @@ o.cindent = true
 o.backspace = "eol,start,indent"
 
 -- 设置缩进宽度
-o.shiftwidth  = 4
+o.shiftwidth = 4
 
 -- 设置 TAB 宽度
-o.tabstop  = 4
+o.tabstop = 4
 
 -- 如果后面设置了 expandtab 那么展开 tab 为多少字符
 o.softtabstop = 4
@@ -40,7 +41,7 @@ o.winaltkeys = "no"
 o.ttimeout = true
 
 -- 功能键超时检测 50 毫秒
-o.ttimeoutlen = 50
+o.ttimeoutlen = 30
 
 -- 显示光标位置
 o.ruler = true
@@ -74,7 +75,7 @@ o.encoding = "utf-8"
 o.fileencoding = "utf-8"
 
 -- 打开文件时自动尝试下面顺序的编码
-o.fileencodings="ucs-bom,utf-8,gbk,gb18030,big5,euc-jp,latin"
+o.fileencodings = "ucs-bom,utf-8,gbk,gb18030,big5,euc-jp,latin"
 
 -- 文件换行符，默认使用 unix 换行符
 o.fileformats = "unix,dos,mac"
@@ -100,8 +101,9 @@ o.backupext = ".bak"
 -- 禁用交换文件
 o.swapfile = false
 
--- 禁用 undo文件
-o.undofile = false
+-- enable undo file
+o.undofile = true
+o.undolevels = 1000
 
 -- 显示匹配的括号
 o.showmatch = true
@@ -131,21 +133,23 @@ o.number = true
 -- Show (partial) command in the last line of the screen
 o.showcmd = true
 
--- When on, splitting a window will put the new window right of current one
+-- Put new windows right of current
 o.splitright = true
+
+-- Put new windows below current
+o.splitbelow = true
 
 -- Highlight the text line of the cursor
 o.cursorline = true
 
 -- 新建文件后，自动定位到文件末尾
-vim.cmd('autocmd BufNewFile * normal G')
+cmd([[autocmd BufNewFile * normal G]])
+
+-- go to last loc when opening a buffer
+cmd([[autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g`\"" | endif]])
+
 
 vim.cmd([[
-" Return to last edit position when opening files (You want this!)
-autocmd BufReadPost *
-     \ if line("'\"") > 0 && line("'\"") <= line("$") |
-     \   exe "normal! g`\"" |
-     \ endif
 " Remember info about open buffers on close
 set viminfo^=%
 
@@ -186,4 +190,3 @@ set wildignore+=*.msi,*.crx,*.deb,*.vfd,*.apk,*.ipa,*.bin,*.msu
 set wildignore+=*.gba,*.sfc,*.078,*.nds,*.smd,*.smc
 set wildignore+=*.linux2,*.win32,*.darwin,*.freebsd,*.linux,*.android
 ]])
-
