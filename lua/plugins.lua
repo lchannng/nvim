@@ -112,7 +112,6 @@ local function startup()
 
   use {
     'lchannng/vim-header',
-    event = "BufNewFile",
     config = function()
       vim.cmd([[
         let g:header_auto_add_header = 1
