@@ -53,13 +53,11 @@ local function startup(use)
 
   use {
     'akinsho/bufferline.nvim',
-    event = "BufReadPre",
     config = theme.bufferline,
   }
 
   use {
     'nvim-lualine/lualine.nvim',
-    event = "BufReadPre",
     after = 'onedark.nvim',
     config = theme.lualine,
   }
