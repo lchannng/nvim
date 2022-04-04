@@ -4,19 +4,6 @@ Author: lchannng <l.channng@gmail.com>
 Date  : 2022/04/01 11:24:31
 --]] --
 
-
-local fn = vim.fn
-local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-local packer_bootstrap = nil
-if fn.empty(fn.glob(install_path)) > 0 then
-  packer_bootstrap = fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
-end
-
-local rtp_addition = fn.stdpath('data') .. '/site/pack/*/start/*'
-if not string.find(vim.o.runtimepath, rtp_addition) then
-  vim.o.runtimepath = rtp_addition .. ',' .. vim.o.runtimepath
-end
-
 local config = {
   profile = {
     enable = true,
@@ -29,10 +16,37 @@ local config = {
   }
 }
 
-local function startup(use)
-  use 'wbthomason/packer.nvim'
-  use { 'dstein64/vim-startuptime', cmd = { "StartupTime" } }
+local function startup()
+  local fn = vim.fn
+  local rtp_addition = fn.stdpath('data') .. '/site/pack/*/start/*'
+  if not string.find(vim.o.runtimepath, rtp_addition) then
+    vim.o.runtimepath = rtp_addition .. ',' .. vim.o.runtimepath
+  end
+
+  local install_path = fn.stdpath('data') .. '/site/pack/packer/opt/packer.nvim'
+  if fn.empty(fn.glob(install_path)) > 0 then
+    fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
+  end
+
+  vim.cmd([[packadd packer.nvim]])
+
+  local packer = require("packer")
+  packer.reset()
+  packer.init(config)
+  local use = packer.use
+
   use 'lewis6991/impatient.nvim'
+
+  use {
+    'wbthomason/packer.nvim',
+    opt = true
+  }
+
+  use {
+    'dstein64/vim-startuptime',
+    cmd = { "StartupTime" }
+  }
+
   use {
     'sheerun/vim-polyglot',
     event = "BufRead",
@@ -160,7 +174,7 @@ local function startup(use)
     'hrsh7th/nvim-cmp',
     event = "InsertEnter",
     opt = true,
-    wants = {"LuaSnip"},
+    wants = { "LuaSnip" },
     requires = {
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-nvim-lua',
@@ -176,13 +190,18 @@ local function startup(use)
     'neovim/nvim-lspconfig',
     event = "BufReadPre",
     opt = true,
-    wants = {"cmp-nvim-lsp"},
+    wants = { "cmp-nvim-lsp" },
     config = [[require("config.lsp")]],
   }
 
-  if packer_bootstrap then
-    require('packer').sync()
-  end
+  return packer
 end
 
-require("packer").startup({ startup, config = config })
+local M = setmetatable({}, {
+  __index = function(_, key)
+    local packer = startup()
+    return packer[key]
+  end
+})
+
+return M
