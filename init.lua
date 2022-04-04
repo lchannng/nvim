@@ -4,6 +4,7 @@ Author: lchannng <l.channng@gmail.com>
 Date  : 2022/03/27 23:06:24
 --]]--
 
+pcall(function() require("impatient").enable_profile() end)
 require("options")
 require("plugins")
 

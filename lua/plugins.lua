@@ -32,6 +32,7 @@ local config = {
 local function startup(use)
   use 'wbthomason/packer.nvim'
   use { 'dstein64/vim-startuptime', cmd = { "StartupTime" } }
+  use 'lewis6991/impatient.nvim'
   use 'sheerun/vim-polyglot'
 
   use {
