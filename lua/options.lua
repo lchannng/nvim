@@ -6,7 +6,20 @@ Date  : 2022/03/31 22:44:07
 
 local vim = vim
 local cmd = vim.cmd
+local g = vim.g
 local o = vim.o
+
+-- don't load the plugins below
+g.loaded_gzip = 1
+g.loaded_fzf = 1
+g.loaded_tar = 1
+g.loaded_tarPlugin = 1
+g.loaded_zipPlugin = 1
+g.loaded_2html_plugin = 1
+g.loaded_netrw = 1
+g.loaded_netrwPlugin = 1
+g.loaded_matchit = 1
+--g.loaded_matchparen = 1
 
 -- 自动缩进
 o.autoindent = true
