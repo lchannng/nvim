@@ -33,7 +33,10 @@ local function startup(use)
   use 'wbthomason/packer.nvim'
   use { 'dstein64/vim-startuptime', cmd = { "StartupTime" } }
   use 'lewis6991/impatient.nvim'
-  use 'sheerun/vim-polyglot'
+  use {
+    'sheerun/vim-polyglot',
+    event = "BufRead",
+  }
 
   use {
     "kazhala/close-buffers.nvim",
@@ -88,6 +91,7 @@ local function startup(use)
 
   use {
     'lchannng/vim-header',
+    event = "BufNewFile",
     config = function()
       vim.cmd([[
         let g:header_auto_add_header = 1
