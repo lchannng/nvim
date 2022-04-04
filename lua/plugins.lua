@@ -44,6 +44,13 @@ local function startup(use)
   }
 
   use {
+    'nathom/filetype.nvim',
+    config = function()
+      require("filetype").setup({})
+    end
+  }
+
+  use {
     "folke/which-key.nvim",
     event = "VimEnter",
     config = [[require("config.keys")]],
