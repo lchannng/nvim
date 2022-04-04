@@ -46,7 +46,10 @@ local servers = {
   pyright = {},
 
   -- shell
-  bashls = {}
+  bashls = {},
+
+  -- c/cpp
+  clangd = {},
 }
 
 local opts = { noremap = true, silent = true }
