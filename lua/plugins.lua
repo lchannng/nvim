@@ -17,15 +17,16 @@ local config = {
 }
 
 local function startup()
-  local fn = vim.fn
-  local rtp_addition = fn.stdpath('data') .. '/site/pack/*/start/*'
+  local runtime_dir = get_runtime_dir()
+  local rtp_addition = runtime_dir .. '/site/pack/*/start/*'
   if not string.find(vim.o.runtimepath, rtp_addition) then
     vim.o.runtimepath = rtp_addition .. ',' .. vim.o.runtimepath
   end
 
-  local install_path = fn.stdpath('data') .. '/site/pack/packer/opt/packer.nvim'
-  if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
+  local fn = vim.fn
+  local packer_dir = runtime_dir .. '/site/pack/packer/opt/packer.nvim'
+  if fn.empty(fn.glob(packer_dir)) > 0 then
+    fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', packer_dir })
   end
 
   vim.cmd([[packadd packer.nvim]])

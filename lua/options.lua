@@ -104,7 +104,7 @@ o.writebackup = true
 o.tags = "./.tags;,.tags"
 
 -- 备份文件地址，统一管理
-o.backupdir = vim.fn.stdpath("data") .. "/tmp"
+o.backupdir = get_runtime_dir() .. "/tmp"
 
 vim.fn.mkdir(o.backupdir, "p", "0700")
 

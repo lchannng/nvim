@@ -46,7 +46,9 @@ local servers = {
   pyright = {},
 
   -- shell
-  bashls = {},
+  bashls = {
+    filetypes = { 'sh', 'zsh' }
+  },
 
   -- c/cpp
   clangd = {},
