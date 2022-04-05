@@ -190,7 +190,13 @@ local function startup()
     'neovim/nvim-lspconfig',
     event = "BufReadPre",
     opt = true,
-    wants = { "cmp-nvim-lsp" },
+    wants = {
+      "cmp-nvim-lsp",
+      "nvim-lsp-installer",
+    },
+    requires = {
+      'williamboman/nvim-lsp-installer',
+    },
     config = [[require("config.lsp")]],
   }
 
