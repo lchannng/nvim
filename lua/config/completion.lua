@@ -2,7 +2,7 @@
 File  : completion.lua
 Author: lchannng <l.channng@gmail.com>
 Date  : 2022/04/02 19:19:43
---]]--
+--]] --
 
 -- luasnip setup
 local luasnip = require 'luasnip'
@@ -49,7 +49,24 @@ cmp.setup {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
     { name = 'path' },
-    { name = 'buffer' },
+    { name = 'buffer',
+      option = {
+        get_bufnrs = function()
+          local bufs = {}
+          local api = vim.api
+          for _, win in ipairs(api.nvim_list_wins()) do
+            local buf = api.nvim_win_get_buf(win)
+            if buf then
+              local byte_size = api.nvim_buf_get_offset(buf, api.nvim_buf_line_count(buf))
+              if byte_size < 1024 * 1024 then -- 1 Megabyte max
+                bufs[buf] = true
+              end
+            end
+          end
+          return vim.tbl_keys(bufs)
+        end
+      }
+    },
     { name = 'nvim_lua' },
   },
 }
