@@ -54,6 +54,10 @@ function M.bufferline()
 end
 
 function M.lualine()
+  local file_component = {
+    'filename',
+    path = 1,
+  }
   require('lualine').setup({
       options = {
         icons_enabled = false,
@@ -72,7 +76,15 @@ function M.lualine()
           },
           'diagnostics'
         },
+        lualine_c = {
+          file_component,
+        },
       },
+      inactive_sections = {
+        lualine_c = {
+          file_component,
+        },
+      }
     })
 end
 
