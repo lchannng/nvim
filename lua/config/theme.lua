@@ -95,7 +95,11 @@ function M.nvim_tree()
     files = 1,
     folder_arrows = 1,
   }
-  require'nvim-tree'.setup {}
+  require'nvim-tree'.setup {
+    update_focused_file = {
+      enable = true,
+    }
+  }
 end
 
 return M

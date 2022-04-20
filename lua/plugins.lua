@@ -188,7 +188,7 @@ local function startup()
 
   use {
     'neovim/nvim-lspconfig',
-    event = "BufReadPre",
+    event = { "BufReadPre", "InsertEnter" },
     opt = true,
     wants = {
       "cmp-nvim-lsp",

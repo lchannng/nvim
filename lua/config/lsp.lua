@@ -92,6 +92,7 @@ local ensure_installd_servers = {
   "pyright",
   "sumneko_lua",
   "bashls",
+  "cmake",
 }
 
 for _, name in pairs(ensure_installd_servers) do
