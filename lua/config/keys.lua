@@ -25,6 +25,7 @@ util.nnoremap("gw", "*N")
 util.xnoremap("gw", "*N")
 
 -- buffers
+util.nmap("<leader>e", ':e <c-r>=expand("%:p:h")<cr>/')
 wk.register({
   ['<Left>'] = {'<cmd>bprev<cr>', "Previous Buffer"},
   ['<Right>'] = {'<cmd>bnext<cr>', "Next Buffer"},
