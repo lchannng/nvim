@@ -96,16 +96,21 @@ function M.lualine()
 end
 
 function M.nvim_tree()
-  vim.g.nvim_tree_show_icons = {
-    git= 1,
-    folders= 0,
-    files = 1,
-    folder_arrows = 1,
-  }
   require'nvim-tree'.setup {
     update_focused_file = {
       enable = true,
-    }
+    },
+    renderer = {
+      icons = {
+        webdev_colors = false,
+        show = {
+          file = false,
+          folder = false,
+          folder_arrow = false,
+          git = true,
+        }
+      }
+    },
   }
 end
 
