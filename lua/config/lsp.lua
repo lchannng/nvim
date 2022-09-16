@@ -94,6 +94,7 @@ local ensure_installd_servers = {
   "bashls",
   "cmake",
   "rust",
+  "tsserver",
 }
 
 for _, name in pairs(ensure_installd_servers) do
