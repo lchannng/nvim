@@ -35,11 +35,18 @@ function M.onedark()
 end
 
 function M.bufferline()
-  local no_italic = {gui = "none", }
+  local no_italic = {
+    underline = false,
+    undercurl = false,
+    italic = false
+  }
   require('bufferline').setup({
       options = {
         mode = "buffers", -- set to "tabs" to only show tabpages instead
-        indicator_icon = "",
+        indicator = {
+          icon = '',
+          style = 'none',
+        },
         show_buffer_icons = false, -- disable filetype icons for buffers
         show_buffer_close_icons = false,
         show_close_icon = false,

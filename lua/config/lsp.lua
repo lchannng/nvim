@@ -93,6 +93,7 @@ local ensure_installd_servers = {
   "sumneko_lua",
   "bashls",
   "cmake",
+  "rust",
 }
 
 for _, name in pairs(ensure_installd_servers) do

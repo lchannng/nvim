@@ -9,6 +9,9 @@ local cmd = vim.cmd
 local g = vim.g
 local o = vim.o
 
+g.do_filetype_lua = 1
+g.did_load_filetypes = 0
+
 -- don't load the plugins below
 g.loaded_gzip = 1
 g.loaded_fzf = 1
