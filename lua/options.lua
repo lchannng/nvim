@@ -29,6 +29,9 @@ o.autoindent = true
 o.smartindent = true
 o.cindent = true
 
+-- Disable mouse mode
+o.mouse = ""
+
 -- 设置 Backspace 键模式
 o.backspace = "eol,start,indent"
 
