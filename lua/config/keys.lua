@@ -2,43 +2,43 @@
 File  : keys.lua
 Author: lchannng <l.channng@gmail.com>
 Date  : 2022/04/03 14:44:54
---]]--
+--]] --
 
 local wk = require("which-key")
-local util = require("util")
+local keymap = vim.keymap
 
 -- Move to window using the <ctrl> movement keys
-util.nmap("<C-Left>", "<C-w>h")
-util.nmap("<C-Down>", "<C-w>j")
-util.nmap("<C-Up>", "<C-w>k")
-util.nmap("<C-Right>", "<C-w>l")
+keymap.set('n', '<C-Left>', '<C-w>h')
+keymap.set('n', '<C-Down>', '<C-w>j')
+keymap.set('n', '<C-Up>', '<C-w>k')
+keymap.set('n', '<C-Right>', '<C-w>l')
 
--- Resize window using <ctrl> arrow keys
-util.nnoremap("<S-Up>", ":resize +4<CR>")
-util.nnoremap("<S-Down>", ":resize -4<CR>")
-util.nnoremap("<S-Left>", ":vertical resize -4<CR>")
-util.nnoremap("<S-Right>", ":vertical resize +4<CR>")
+-- Resize window using <shift> arrow keys
+keymap.set('n', '<S-Up>', ':resize +4<CR>', { noremap = true })
+keymap.set('n', '<S-Down>', ":resize -4<CR>", { noremap = true })
+keymap.set('n', '<S-Left>', ":vertical resize -4<CR>", { noremap = true })
+keymap.set('n', '<S-Right>', ":vertical resize +4<CR>", { noremap = true })
 
 -- Clear search with <esc>
-util.map("", "<esc>", ":noh<cr>")
-util.nnoremap("gw", "*N")
-util.xnoremap("gw", "*N")
+keymap.set('', '<esc>', ':noh<cr>')
+keymap.set('n', 'gw', '*N', { noremap = true })
+keymap.set('x', 'gw', '*N', { noremap = true })
 
 -- buffers
-util.nmap("<leader>e", ':e <c-r>=expand("%:p:h")<cr>/')
+keymap.set('n', '<leader>e', ':e <c-r>=expand("%:p:h")<cr>/')
 wk.register({
-  ['<Left>'] = {'<cmd>bprev<cr>', "Previous Buffer"},
-  ['<Right>'] = {'<cmd>bnext<cr>', "Next Buffer"},
+  ['<Left>'] = { '<cmd>bprev<cr>', "Previous Buffer" },
+  ['<Right>'] = { '<cmd>bnext<cr>', "Next Buffer" },
 
-  ["<leader>b"] = { name = "+buffer" },
-  ["<leader>bd"] = { '<cmd>BDelete this<cr>', "Delete Buffer" },
-  ["<leader>ba"] = { '<cmd>BDelete all<cr>', "Delete All Buffer" },
+  ['<leader>b'] = { name = "+buffer" },
+  ['<leader>bd'] = { '<cmd>BDelete this<cr>', "Delete Buffer" },
+  ['<leader>ba'] = { '<cmd>BDelete all<cr>', "Delete All Buffer" },
 })
 
 for i = 0, 9 do
-  local lhs = string.format("<leader>%d", i)
-  local rhs = string.format("<cmd>BufferLineGoToBuffer %d<CR>", i)
-  util.nnoremap(lhs, rhs)
+  local lhs = string.format('<leader>%d', i)
+  local rhs = string.format('<cmd>BufferLineGoToBuffer %d<CR>', i)
+  keymap.set('n', lhs, rhs, { noremap = true })
 end
 
 -- tabs
@@ -54,16 +54,16 @@ wk.register({
 
 -- searching
 wk.register({
-    ['<leader>s'] = { name = "+searching" },
-    ['<leader>sf'] = { '<cmd>Telescope find_files<CR>', "Fine files" },
-    ['<leader>sg'] = { '<cmd>Telescope live_grep<CR>', "Grep in files" },
-    ['<leader>sb'] = { '<cmd>Telescope buffers<CR>', "List Buffers" },
-    ['<leader>sh'] = { '<cmd>Telescope help_tags<CR>', "Find tags" },
-    ['<leader>sl'] = { '<cmd>Telescope current_buffer_fuzzy_find<CR>', "Find in current buffer" },
-    ['<leader>sm'] = { '<cmd>Telescope keymaps<CR>', "List keymaps" },
-    ['<leader>sr'] = { '<cmd>Telescope lsp_references<CR>', "Find refrences" },
-    ['<leader>ss'] = { '<cmd>Telescope lsp_document_symbols<CR>', "List symbols in current file" },
-    ['<leader>sw'] = { '<cmd>Telescope lsp_workspace_symbols<CR>', "List symbles in workspace" },
+  ['<leader>s'] = { name = "+searching" },
+  ['<leader>sf'] = { '<cmd>Telescope find_files<CR>', "Fine files" },
+  ['<leader>sg'] = { '<cmd>Telescope live_grep<CR>', "Grep in files" },
+  ['<leader>sb'] = { '<cmd>Telescope buffers<CR>', "List Buffers" },
+  ['<leader>sh'] = { '<cmd>Telescope help_tags<CR>', "Find tags" },
+  ['<leader>sl'] = { '<cmd>Telescope current_buffer_fuzzy_find<CR>', "Find in current buffer" },
+  ['<leader>sm'] = { '<cmd>Telescope keymaps<CR>', "List keymaps" },
+  ['<leader>sr'] = { '<cmd>Telescope lsp_references<CR>', "Find refrences" },
+  ['<leader>ss'] = { '<cmd>Telescope lsp_document_symbols<CR>', "List symbols in current file" },
+  ['<leader>sw'] = { '<cmd>Telescope lsp_workspace_symbols<CR>', "List symbles in workspace" },
 })
 
 -- lsp
@@ -71,7 +71,7 @@ wk.register({
 -- gitsigns
 wk.register({
   ['<leader>g'] = { name = "+gitsigns" },
-  ['<leader>gb'] = { '<cmd>lua require"gitsigns".blame_line{full=true}<CR>', "Git Blame"},
+  ['<leader>gb'] = { '<cmd>lua require"gitsigns".blame_line{full=true}<CR>', "Git Blame" },
 })
 
 -- misc
@@ -82,12 +82,12 @@ wk.register({
   ['<F9>'] = { '<cmd>PackerCompile<cr>', "" },
   ['<F10>'] = { '<cmd>PackerSync<cr>', "" },
   ['<F12>'] = { '<cmd>call DeleteTrailingWS()<cr>', "Delete trailing white space" },
-  ['<leader>h'] = { "<cmd>nohlsearch<cr>", "Cancel Highlight" },
+  ['<leader>h'] = { '<cmd>nohlsearch<cr>', "Cancel Highlight" },
 })
 
 wk.register({
-  ['<leader>r'] = { "<cmd>call g:VReplace()<cr>", "Replace the selected text" },
-}, {mode = "v", })
+  ['<leader>r'] = { '<cmd>call g:VReplace()<cr>', "Replace the selected text" },
+}, { mode = "v", })
 
 -- ignore
 local ignore = {}
@@ -103,9 +103,15 @@ func! DeleteTrailingWS()
   %s/\s\+$//ge
   exe "normal `z"
 endfunc
-autocmd BufWrite *.py :call DeleteTrailingWS()
-autocmd BufWrite *.coffee :call DeleteTrailingWS()
 ]])
+
+vim.api.nvim_create_autocmd({ 'BufWrite' }, {
+  pattern = {
+    '*.py',
+    '*.rs',
+  },
+  callback = "DeleteTrailingWS"
+})
 
 -- pairing
 vim.cmd([[
@@ -136,7 +142,7 @@ vim.api.nvim_exec(
   endfunction
   xnoremap * :<C-u>call g:VSetSearch('/')<CR>/<C-R>=@/<CR><CR>
   xnoremap # :<C-u>call g:VSetSearch('?')<CR>?<C-R>=@/<CR><CR>
-]],
+]] ,
   false
 )
 

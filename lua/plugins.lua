@@ -50,7 +50,7 @@ local function startup()
 
   use {
     'sheerun/vim-polyglot',
-    event = "BufRead",
+    event = "BufReadPost",
   }
 
   use {
