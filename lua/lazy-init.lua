@@ -54,7 +54,7 @@ require("lazy").setup({
 
   {
     'lukas-reineke/indent-blankline.nvim',
-    event = "BufReadPre",
+    event = "BufReadPost",
     config = function()
       require("indent_blankline").setup({})
     end,
@@ -68,12 +68,12 @@ require("lazy").setup({
 
   {
     'sheerun/vim-polyglot',
-    event = "BufReadPost",
+    event = "BufReadPre",
   },
 
   {
     'lewis6991/gitsigns.nvim',
-    event = "BufReadPre",
+    event = "BufReadPost",
     config = function()
       require('gitsigns').setup({})
     end
@@ -81,7 +81,7 @@ require("lazy").setup({
 
   {
     'ludovicchabant/vim-gutentags',
-    event = "BufReadPre",
+    event = "BufReadPost",
     config = function()
       vim.cmd([[
         " gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
