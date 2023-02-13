@@ -4,6 +4,7 @@ Author: lchannng <l.channng@gmail.com>
 Date  : 2022/04/03 14:44:54
 --]] --
 
+local vim = vim
 local wk = require("which-key")
 local keymap = vim.keymap
 

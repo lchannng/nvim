@@ -4,147 +4,84 @@ Author: lchannng <l.channng@gmail.com>
 Date  : 2022/04/01 11:24:31
 --]] --
 
-local config = {
-  profile = {
-    enable = true,
-    threshold = 0 -- the amount in ms that a plugins load time must be over for it to be included in the profile
-  },
-  display = {
-    open_fn = function()
-      return require('packer.util').float({ border = 'single' })
-    end
-  }
-}
+local vim = vim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
 
-local function startup()
-  local runtime_dir = get_runtime_dir()
-  local rtp_addition = runtime_dir .. '/site/pack/*/start/*'
-  if not string.find(vim.o.runtimepath, rtp_addition) then
-    vim.o.runtimepath = rtp_addition .. ',' .. vim.o.runtimepath
-  end
-
-  local fn = vim.fn
-  local packer_dir = runtime_dir .. '/site/pack/packer/opt/packer.nvim'
-  if fn.empty(fn.glob(packer_dir)) > 0 then
-    fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', packer_dir })
-  end
-
-  vim.cmd([[packadd packer.nvim]])
-
-  local packer = require("packer")
-  packer.reset()
-  packer.init(config)
-  local use = packer.use
-
-  use 'lewis6991/impatient.nvim'
-
-  use {
-    'wbthomason/packer.nvim',
-    opt = true
-  }
-
-  use {
+require("lazy").setup({
+  {
     'dstein64/vim-startuptime',
-    cmd = { "StartupTime" }
-  }
+    cmd = 'StartupTime',
+  },
 
-  use {
-    'sheerun/vim-polyglot',
-    event = "BufReadPost",
-  }
-
-  use {
-    "kazhala/close-buffers.nvim",
-    cmd = "BDelete"
-  }
-
-  use {
+  {
     'nathom/filetype.nvim',
     config = function()
       require("filetype").setup({})
     end
-  }
+  },
 
-  use {
-    "folke/which-key.nvim",
-    event = "VimEnter",
-    config = [[require("config.keys")]],
-  }
+  {
+    "kazhala/close-buffers.nvim",
+    cmd = "BDelete",
+  },
 
-  local theme = require("config.theme")
-  use {
+  {
     'navarasu/onedark.nvim',
-    config = theme.onedark,
-  }
+    config = require("config.theme").onedark,
+  },
 
-  use {
+  {
     'akinsho/bufferline.nvim',
-    config = theme.bufferline,
-  }
+    config = require("config.theme").bufferline,
+  },
 
-  use {
+  {
     'nvim-lualine/lualine.nvim',
     after = 'onedark.nvim',
-    config = theme.lualine,
-  }
+    config = require("config.theme").lualine,
+  },
 
-  use {
+  {
     'lukas-reineke/indent-blankline.nvim',
-    event = "BufReadPre",
+    event = "BufReadPost",
     config = function()
       require("indent_blankline").setup({})
     end,
-  }
+  },
 
-  use {
+  {
     'kyazdani42/nvim-tree.lua',
-    opt = true,
     cmd = { "NvimTreeToggle", "NvimTreeRefresh", },
-    config = theme.nvim_tree,
-  }
+    config = require("config.theme").nvim_tree,
+  },
 
-  use {
-    'lewis6991/gitsigns.nvim',
+  {
+    'sheerun/vim-polyglot',
     event = "BufReadPre",
+  },
+
+  {
+    'lewis6991/gitsigns.nvim',
+    event = "BufReadPost",
     config = function()
       require('gitsigns').setup({})
     end
-  }
+  },
 
-  use {
-    'lchannng/vim-header',
-    config = function()
-      vim.cmd([[
-        let g:header_auto_add_header = 1
-        let g:header_field_author = 'lchannng'
-        let g:header_field_author_email = 'l.channng@gmail.com'
-        let g:header_field_filename_path = 0
-        let g:header_field_modified_timestamp = 0
-        let g:header_field_modified_by = 0
-        let g:header_field_timestamp_format = '%Y/%m/%d %H:%M:%S'
-      ]])
-    end
-  }
-
-  use {
-    'nvim-telescope/telescope.nvim',
-    opt = true,
-    cmd = { "Telescope" },
-    module = { "telescope" },
-    wants = {
-      'plenary.nvim',
-      'telescope-fzf-native.nvim',
-    },
-    requires = {
-      'nvim-lua/plenary.nvim',
-      { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-    },
-    config = [[require("config.telescope")]]
-  }
-
-  use {
+  {
     'ludovicchabant/vim-gutentags',
-    event = "BufReadPre",
+    event = "BufReadPost",
     config = function()
       vim.cmd([[
         " gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
@@ -168,46 +105,110 @@ local function startup()
         endif
       ]])
     end,
-  }
+  },
 
-  use {
+  {
+    'lchannng/vim-header',
+    config = function()
+      vim.cmd([[
+        let g:header_auto_add_header = 1
+        let g:header_field_author = 'lchannng'
+        let g:header_field_author_email = 'l.channng@gmail.com'
+        let g:header_field_filename_path = 0
+        let g:header_field_modified_timestamp = 0
+        let g:header_field_modified_by = 0
+        let g:header_field_timestamp_format = '%Y/%m/%d %H:%M:%S'
+      ]])
+    end
+  },
+
+  -- telescope begin
+  { 'nvim-lua/plenary.nvim', lazy = true, },
+
+  {
+    'nvim-telescope/telescope-fzf-native.nvim',
+    lazy = true,
+    build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
+  },
+
+  {
+    'nvim-telescope/telescope.nvim',
+    cmd = { "Telescope" },
+    dependencies = {
+      'plenary.nvim',
+      'telescope-fzf-native.nvim',
+    },
+  },
+  -- telescope end
+
+  -- lsp begin
+  { 'hrsh7th/cmp-nvim-lsp', lazy = true, },
+  { 'neovim/nvim-lspconfig', lazy = true, },
+
+  {
+    'williamboman/mason.nvim',
+    lazy = true,
+    config = function() require("mason").setup() end,
+  },
+
+  {
+    'williamboman/mason-lspconfig.nvim',
+    event = { "BufReadPre", "InsertEnter", },
+    config = function()
+      require("config.lsp")
+    end,
+    dependencies = {
+      "cmp-nvim-lsp",
+      "nvim-lspconfig",
+      "mason.nvim",
+    },
+  },
+
+  -- lsp end
+
+  -- completion begin
+  { 'hrsh7th/cmp-nvim-lua', lazy = true, },
+  { 'hrsh7th/cmp-path', lazy = true, },
+  { 'hrsh7th/cmp-buffer', lazy = true, },
+  { 'L3MON4D3/LuaSnip', lazy = true, },
+  { 'saadparwaiz1/cmp_luasnip', lazy = true, },
+  {
     'hrsh7th/nvim-cmp',
     event = "InsertEnter",
-    opt = true,
-    wants = { "LuaSnip" },
-    requires = {
-      'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-nvim-lua',
-      'hrsh7th/cmp-path',
-      'hrsh7th/cmp-buffer',
-      'L3MON4D3/LuaSnip',
-      'saadparwaiz1/cmp_luasnip'
-    },
-    config = [[require("config.completion")]],
-  }
-
-  use {
-    'neovim/nvim-lspconfig',
-    event = { "BufReadPre", "InsertEnter" },
-    opt = true,
-    wants = {
+    config = function() require("config.completion") end,
+    dependencies = {
       "cmp-nvim-lsp",
-      "nvim-lsp-installer",
+      "cmp-nvim-lua",
+      "cmp-path",
+      "cmp-buffer",
+      "LuaSnip",
+      "cmp_luasnip",
+    }
+  },
+  -- completion end
+
+  {
+    "folke/which-key.nvim",
+    event = "VimEnter",
+    config = function() require("config.keys") end,
+  },
+},
+{
+  ui = {
+    icons = {
+      cmd = "⌘",
+      config = "🛠",
+      event = "📅",
+      ft = "📂",
+      init = "⚙",
+      keys = "🗝",
+      plugin = "🔌",
+      runtime = "💻",
+      source = "📄",
+      start = "🚀",
+      task = "📌",
+      lazy = "💤 ",
     },
-    requires = {
-      'williamboman/nvim-lsp-installer',
-    },
-    config = [[require("config.lsp")]],
-  }
-
-  return packer
-end
-
-local M = setmetatable({}, {
-  __index = function(_, key)
-    local packer = startup()
-    return packer[key]
-  end
-})
-
-return M
+  },
+}
+)

@@ -4,6 +4,8 @@ Author: lchannng <l.channng@gmail.com>
 Date  : 2022/04/02 19:19:43
 --]] --
 
+local vim = vim
+
 -- luasnip setup
 local luasnip = require 'luasnip'
 

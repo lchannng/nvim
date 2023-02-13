@@ -4,6 +4,7 @@ Author: lchannng <l.channng@gmail.com>
 Date  : 2022/04/03 10:42:26
 --]]--
 
+local vim = vim
 local M = {}
 
 function M.onedark()

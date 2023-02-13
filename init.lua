@@ -42,5 +42,5 @@ end
 
 -- pcall(function() require("impatient").enable_profile() end)
 require("options")
-require("lazy-init")
+require("plugins")
 
