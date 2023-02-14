@@ -134,6 +134,9 @@ require("lazy").setup({
   {
     'nvim-telescope/telescope.nvim',
     cmd = { "Telescope" },
+    config = function()
+      require("config.telescope")
+    end,
     dependencies = {
       'plenary.nvim',
       'telescope-fzf-native.nvim',
@@ -148,7 +151,9 @@ require("lazy").setup({
   {
     'williamboman/mason.nvim',
     lazy = true,
-    config = function() require("mason").setup() end,
+    config = function()
+      require("mason").setup()
+    end,
   },
 
   {
