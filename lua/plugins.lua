@@ -194,7 +194,7 @@ require("lazy").setup({
 
   {
     "folke/which-key.nvim",
-    event = "VimEnter",
+    event = "VeryLazy",
     config = function() require("config.keys") end,
   },
 },
