@@ -40,7 +40,12 @@ function _G.get_cache_dir()
   return fn.stdpath("cache")
 end
 
--- pcall(function() require("impatient").enable_profile() end)
 require("options")
 require("plugins")
+
+-- Source local-only lua configs (not git tracked)
+local local_config_file = string.format("%s/lua/local.lua", _G.get_config_dir())
+if vim.loop.fs_stat(local_config_file) then
+  require("local")
+end
 

@@ -48,7 +48,6 @@ require("lazy").setup({
 
   {
     'nvim-lualine/lualine.nvim',
-    after = 'onedark.nvim',
     config = require("config.theme").lualine,
   },
 
