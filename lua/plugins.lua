@@ -2,7 +2,7 @@
 File  : plugins.lua
 Author: lchannng <l.channng@gmail.com>
 Date  : 2022/04/01 11:24:31
---]] --
+--]]--
 
 local vim = vim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -122,8 +122,6 @@ require("lazy").setup({
   },
 
   -- telescope begin
-  { 'nvim-lua/plenary.nvim', lazy = true, },
-
   {
     'nvim-telescope/telescope-fzf-native.nvim',
     lazy = true,
@@ -137,14 +135,14 @@ require("lazy").setup({
       require("config.telescope")
     end,
     dependencies = {
-      'plenary.nvim',
+      'nvim-lua/plenary.nvim',
       'telescope-fzf-native.nvim',
     },
   },
   -- telescope end
 
   -- lsp begin
-  { 'hrsh7th/cmp-nvim-lsp', lazy = true, },
+  { 'hrsh7th/cmp-nvim-lsp',  lazy = true, },
   { 'neovim/nvim-lspconfig', lazy = true, },
 
   {
@@ -171,22 +169,17 @@ require("lazy").setup({
   -- lsp end
 
   -- completion begin
-  { 'hrsh7th/cmp-nvim-lua', lazy = true, },
-  { 'hrsh7th/cmp-path', lazy = true, },
-  { 'hrsh7th/cmp-buffer', lazy = true, },
-  { 'L3MON4D3/LuaSnip', lazy = true, },
-  { 'saadparwaiz1/cmp_luasnip', lazy = true, },
   {
     'hrsh7th/nvim-cmp',
     event = "InsertEnter",
     config = function() require("config.completion") end,
     dependencies = {
       "cmp-nvim-lsp",
-      "cmp-nvim-lua",
-      "cmp-path",
-      "cmp-buffer",
-      "LuaSnip",
-      "cmp_luasnip",
+      "hrsh7th/cmp-nvim-lua",
+      'hrsh7th/cmp-path',
+      'hrsh7th/cmp-buffer',
+      'L3MON4D3/LuaSnip',
+      'saadparwaiz1/cmp_luasnip',
     }
   },
   -- completion end
