@@ -148,6 +148,7 @@ require("lazy").setup({
   {
     'williamboman/mason.nvim',
     lazy = true,
+    build = ":MasonUpdate", -- :MasonUpdate updates registry contents
     config = function()
       require("mason").setup()
     end,
@@ -166,6 +167,19 @@ require("lazy").setup({
     },
   },
 
+  {
+    'rcarriga/nvim-dap-ui',
+    -- event = { "BufReadPre", "InsertEnter", },
+    lazy = true,
+    config = function()
+      require("config.dap")
+    end,
+    dependencies = {
+      "mfussenegger/nvim-dap",
+      "jay-babu/mason-nvim-dap.nvim",
+      "mason.nvim",
+    },
+  },
   -- lsp end
 
   -- completion begin
@@ -193,22 +207,22 @@ require("lazy").setup({
     config = function() require("config.keys") end,
   },
 },
-{
-  ui = {
-    icons = {
-      cmd = "⌘",
-      config = "🛠",
-      event = "📅",
-      ft = "📂",
-      init = "⚙",
-      keys = "🗝",
-      plugin = "🔌",
-      runtime = "💻",
-      source = "📄",
-      start = "🚀",
-      task = "📌",
-      lazy = "💤 ",
+  {
+    ui = {
+      icons = {
+        cmd = "⌘",
+        config = "🛠",
+        event = "📅",
+        ft = "📂",
+        init = "⚙",
+        keys = "🗝",
+        plugin = "🔌",
+        runtime = "💻",
+        source = "📄",
+        start = "🚀",
+        task = "📌",
+        lazy = "💤 ",
+      },
     },
-  },
-}
+  }
 )
