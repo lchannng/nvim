@@ -25,15 +25,18 @@ require("lazy").setup({
   },
 
   {
-    'nathom/filetype.nvim',
-    config = function()
-      require("filetype").setup({})
-    end
+    "kazhala/close-buffers.nvim",
+    cmd = "BDelete",
   },
 
   {
-    "kazhala/close-buffers.nvim",
-    cmd = "BDelete",
+    "nvim-treesitter/nvim-treesitter",
+    build = function()
+      require("nvim-treesitter.install").update({ with_sync = true })
+    end,
+    config = function()
+        require("config.treesitter")
+    end,
   },
 
   {
@@ -63,11 +66,6 @@ require("lazy").setup({
     'kyazdani42/nvim-tree.lua',
     cmd = { "NvimTreeToggle", "NvimTreeRefresh", },
     config = require("config.theme").nvim_tree,
-  },
-
-  {
-    'sheerun/vim-polyglot',
-    event = "BufReadPre",
   },
 
   {
@@ -186,7 +184,9 @@ require("lazy").setup({
   {
     'hrsh7th/nvim-cmp',
     event = "InsertEnter",
-    config = function() require("config.completion") end,
+    config = function()
+        require("config.completion")
+    end,
     dependencies = {
       "cmp-nvim-lsp",
       "hrsh7th/cmp-nvim-lua",
@@ -204,7 +204,9 @@ require("lazy").setup({
   {
     "folke/which-key.nvim",
     event = "VeryLazy",
-    config = function() require("config.keys") end,
+    config = function()
+        require("config.keys")
+    end,
   },
 },
   {
