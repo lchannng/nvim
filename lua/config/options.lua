@@ -1,8 +1,6 @@
---[[--
-File  : options.lua
-Author: lchannng <l.channng@gmail.com>
-Date  : 2022/03/31 22:44:07
---]] --
+-- Options are automatically loaded before lazy.nvim startup
+-- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
+-- Add any additional options here
 
 local vim = vim
 local cmd = vim.cmd
@@ -13,15 +11,15 @@ g.do_filetype_lua = 1
 -- g.did_load_filetypes = 0
 
 -- don't load the plugins below
-g.loaded_gzip = 1
-g.loaded_fzf = 1
-g.loaded_tar = 1
-g.loaded_tarPlugin = 1
-g.loaded_zipPlugin = 1
-g.loaded_2html_plugin = 1
-g.loaded_netrw = 1
-g.loaded_netrwPlugin = 1
-g.loaded_matchit = 1
+-- g.loaded_gzip = 1
+-- g.loaded_fzf = 1
+-- g.loaded_tar = 1
+-- g.loaded_tarPlugin = 1
+-- g.loaded_zipPlugin = 1
+-- g.loaded_2html_plugin = 1
+-- g.loaded_netrw = 1
+-- g.loaded_netrwPlugin = 1
+-- g.loaded_matchit = 1
 --g.loaded_matchparen = 1
 
 -- 自动缩进
@@ -110,7 +108,7 @@ o.writebackup = true
 o.tags = "./.tags;,.tags"
 
 -- 备份文件地址，统一管理
-o.backupdir = get_runtime_dir() .. "/tmp"
+o.backupdir = vim.fn.stdpath("data") .. "/tmp"
 
 vim.fn.mkdir(o.backupdir, "p", "0700")
 
@@ -161,13 +159,6 @@ o.splitbelow = true
 -- Highlight the text line of the cursor
 o.cursorline = true
 
--- 新建文件后，自动定位到文件末尾
-cmd([[autocmd BufNewFile * normal G]])
-
--- go to last loc when opening a buffer
-cmd([[autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g`\"" | endif]])
-
-
 vim.cmd([[
 " Remember info about open buffers on close
 set viminfo^=%
@@ -184,8 +175,6 @@ endif
 
 " 设置分隔符可视
 set listchars=tab:\|\ ,trail:.,extends:>,precedes:<
-
-autocmd FileType go setlocal noexpandtab
 
 "----------------------------------------------------------------------
 " 文件搜索和补全时忽略下面扩展名
