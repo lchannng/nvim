@@ -59,6 +59,9 @@ return {
               diagnostics = {
                 globals = { "vim" },
               },
+              format = {
+                disable = false,
+              },
             },
           },
         },
@@ -124,7 +127,7 @@ return {
         root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
         sources = {
           nls.builtins.formatting.stylua,
-          nls.builtins.formatting.shfmt,
+          -- nls.builtins.formatting.shfmt,
         },
       }
     end,
@@ -138,7 +141,7 @@ return {
     opts = {
       ensure_installed = {
         "stylua",
-        "shfmt",
+        -- "shfmt",
       },
     },
     config = function(_, opts)
