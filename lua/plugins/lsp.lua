@@ -60,7 +60,7 @@ return {
                 globals = { "vim" },
               },
               format = {
-                disable = false,
+                enable = false,
               },
             },
           },
