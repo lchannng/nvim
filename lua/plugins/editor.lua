@@ -43,6 +43,14 @@ return {
         bind_to_cwd = false,
         follow_current_file = true,
         use_libuv_file_watcher = true,
+        components = {
+          icon = function(config, node, state)
+            if node.type == "file" or node.type == "directory" then
+              return {}
+            end
+            return require("neo-tree.sources.common.components").icon(config, node, state)
+          end
+        }
       },
       window = {
         mappings = {
@@ -52,10 +60,22 @@ return {
       default_component_configs = {
         indent = {
           with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
-          expander_collapsed = "",
-          expander_expanded = "",
+          expander_collapsed = "+",
+          expander_expanded = "-",
           expander_highlight = "NeoTreeExpander",
         },
+        git_status = {
+          symbols = {
+            deleted = "",
+            renamed = "",
+            modified = "",
+            untracked = "",
+            ignored = "",
+            unstaged = "",
+            staged = "",
+            conflict = ""
+          }
+        }
       },
     },
     config = function(_, opts)
