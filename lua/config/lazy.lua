@@ -16,9 +16,8 @@ require("lazy").setup({
         "LazyVim/LazyVim",
         import = "lazyvim.plugins.core",
         opts = {
-            colorscheme = function()
-                require("onedark").load()
-            end,
+            -- colorscheme = function() require("onedark").load() end,
+            colorscheme = "tokyonight",
             defaults = {
                 autocmds = false,
                 keymaps = false,

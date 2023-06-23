@@ -13,6 +13,12 @@ return {
   },
 
   {
+    "folke/tokyonight.nvim",
+    lazy = true,
+    opts = { style = "night" },
+  },
+
+  {
     "akinsho/bufferline.nvim",
     event = "VeryLazy",
     opts = function()
