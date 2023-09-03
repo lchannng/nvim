@@ -32,6 +32,32 @@ local on_attach = function(_, bufnr)
   end, bufopts)
 end
 
+local servers
+if vim.env.VIM_IDE then
+  servers = {
+    bashls = {},
+    clangd = {},
+    cmake = {},
+    gopls = {},
+    lua_ls = {
+      settings = {
+        Lua = {
+          diagnostics = {
+            globals = { "vim" },
+          },
+          format = {
+            enable = true,
+          },
+        },
+      },
+    },
+    pyright = {},
+    rust_analyzer = {},
+  }
+else
+  servers = {}
+end
+
 return {
   -- lspconfig
   {
@@ -48,26 +74,7 @@ return {
       },
     },
     opts = {
-      servers = {
-        bashls = {},
-        clangd = {},
-        cmake = {},
-        gopls = {},
-        lua_ls = {
-          settings = {
-            Lua = {
-              diagnostics = {
-                globals = { "vim" },
-              },
-              format = {
-                enable = true,
-              },
-            },
-          },
-        },
-        pyright = {},
-        rust_analyzer = {},
-      },
+      servers = servers,
     },
     config = function(_, opts)
       local Util = require("lazyvim.util")
