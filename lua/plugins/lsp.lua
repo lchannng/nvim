@@ -69,7 +69,7 @@ return {
       {
         "hrsh7th/cmp-nvim-lsp",
         cond = function()
-          return require("lazyvim.util").has("nvim-cmp")
+          return require("util").has("nvim-cmp")
         end,
       },
     },
@@ -77,7 +77,7 @@ return {
       servers = servers,
     },
     config = function(_, opts)
-      local Util = require("lazyvim.util")
+      local Util = require("util")
       Util.on_attach(function(client, buffer)
         on_attach(client, buffer)
       end)
