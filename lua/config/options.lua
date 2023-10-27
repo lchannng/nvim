@@ -138,7 +138,7 @@ o.wildmenu = true
 o.lazyredraw = true
 
 -- Specify the behavior when switching between buffers
-o.switchbuf = "useopen,usetab,newtab"
+-- o.switchbuf = "useopen,usetab,newtab"
 o.showtabline = 2
 
 -- The last window always have a status line

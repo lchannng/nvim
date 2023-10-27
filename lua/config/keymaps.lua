@@ -33,7 +33,7 @@ keymap.set('n', '<leader>e', ':e <c-r>=expand("%:p:h")<cr>/')
 
 -- Tabs
 keymap.set('n', '<leader>tn', '<cmd>tabnew<cr>/')
-keymap.set('n', '<leader>tn', '<cmd>tabonly<cr>/')
+keymap.set('n', '<leader>to', '<cmd>tabonly<cr>/')
 keymap.set('n', '<leader>tc', '<cmd>tabclose<cr>/')
 
 -- Delete trailing space
