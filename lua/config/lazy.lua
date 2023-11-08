@@ -15,6 +15,7 @@ require("lazy").setup({
     {
         "LazyVim/LazyVim",
         import = "lazyvim.plugins.core",
+        version = "v9.6.0",
         opts = {
             -- colorscheme = function() require("onedark").load() end,
             colorscheme = "tokyonight",
