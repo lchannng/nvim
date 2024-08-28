@@ -117,9 +117,9 @@ return {
         }
       });
     end,
-      keys = {
-        { "<leader>sr", "<cmd>GrugFar<cr>", desc = "Replace in files (GrugFar)" },
-      },
+    keys = {
+      { "<leader>sr", "<cmd>GrugFar<cr>", desc = "Replace in files (GrugFar)" },
+    },
   },
 
   -- fuzzy finder
