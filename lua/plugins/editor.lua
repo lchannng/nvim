@@ -94,14 +94,32 @@ return {
   },
 
   -- search/replace in multiple files
+  --[[
   {
     "nvim-pack/nvim-spectre",
+    enabled = false,
     cmd = "Spectre",
     opts = { open_cmd = "noswapfile vnew" },
         -- stylua: ignore
         keys = {
             { "<leader>sr", function() require("spectre").open() end, desc = "Replace in files (Spectre)" },
         },
+  },
+  ]]
+
+  {
+    'MagicDuck/grug-far.nvim',
+    config = function()
+      require('grug-far').setup({
+        resultsSeparatorLineChar = "-",
+        icons = {
+          enabled = false,
+        }
+      });
+    end,
+      keys = {
+        { "<leader>sr", "<cmd>GrugFar<cr>", desc = "Replace in files (GrugFar)" },
+      },
   },
 
   -- fuzzy finder
