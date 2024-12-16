@@ -53,7 +53,7 @@ if vim.env.VIM_IDE then
     },
     pyright = {},
     rust_analyzer = {},
-    tsserver = {},
+    ts_ls = {},
   }
 else
   servers = {}
