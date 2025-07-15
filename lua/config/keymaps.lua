@@ -5,6 +5,8 @@
 local vim = vim
 local keymap = vim.keymap
 
+keymap.set('n', '<C-a>', '<C-b>')
+
 -- Move to window using the <ctrl> movement keys
 keymap.set('n', '<C-Left>', '<C-w>h')
 keymap.set('n', '<C-Down>', '<C-w>j')
