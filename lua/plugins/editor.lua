@@ -127,6 +127,7 @@ return {
     "nvim-telescope/telescope.nvim",
     cmd = "Telescope",
     dependencies = {
+      --[[
       {
         "nvim-telescope/telescope-fzf-native.nvim",
         build =
@@ -134,7 +135,7 @@ return {
         cond = function()
           return vim.fn.executable("cmake") == 1
         end,
-      },
+      },]]
     },
     opts = {
       defaults = {
@@ -143,19 +144,20 @@ return {
         layout_config = { height = 0.95 },
       },
       extensions = {
+        --[[
         fzf = {
           fuzzy = true,                   -- false will only do exact matching
           override_generic_sorter = true, -- override the generic sorter
           override_file_sorter = true,    -- override the file sorter
           case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
           -- the default case_mode is "smart_case"
-        },
+        },]]
       },
     },
     config = function(_, opts)
       local Telescope = require("telescope")
       Telescope.setup(opts)
-      Telescope.load_extension("fzf")
+      -- Telescope.load_extension("fzf")
     end,
     keys = {
       { "<leader>,",       "<cmd>Telescope buffers show_all_buffers=true<cr>",   desc = "Switch Buffer" },
@@ -273,4 +275,32 @@ return {
       { "<leader>ba", "<CMD>BDelete all<CR>",  desc = "Close all buffers" },
     },
   },
+
+  {
+    "RaafatTurki/hex.nvim",
+    cmd = "HexDump",
+    config = function()
+      require 'hex'.setup {
+
+        -- cli command used to dump hex data
+        dump_cmd = 'xxd -g 1 -u',
+
+        -- cli command used to assemble from hex data
+        assemble_cmd = 'xxd -r',
+
+        -- function that runs on BufReadPre to determine if it's binary or not
+        is_file_binary_pre_read = function()
+          -- logic that determines if a buffer contains binary data or not
+          -- must return a bool
+        end,
+
+        -- function that runs on BufReadPost to determine if it's binary or not
+        is_file_binary_post_read = function()
+          -- logic that determines if a buffer contains binary data or not
+          -- must return a bool
+        end,
+      }
+    end,
+  },
+
 }
