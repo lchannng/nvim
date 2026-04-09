@@ -1,3 +1,4 @@
+local vim = vim
 local kopts = { noremap = true, silent = true }
 vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, kopts)
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, kopts)
@@ -66,7 +67,17 @@ if vim.env.VIM_IDE then
         },
       },
     },
-    pyright = {},
+    pyright = {
+      on_init = function(client)
+        local root = client.root_dir or vim.fn.getcwd()
+        local venv_python = root .. "/.venv/bin/python"
+        if vim.fn.filereadable(venv_python) == 1 then
+          vim.notify("UV venv detected: " .. venv_python, vim.log.levels.INFO)
+          client.config.settings.python = client.config.settings.python or {}
+          client.config.settings.python.pythonPath = venv_python
+        end
+      end,
+    },
     rust_analyzer = {},
     ts_ls = {},
   }
@@ -82,6 +93,7 @@ return {
     dependencies = {
       "mason.nvim",
       "mason-org/mason-lspconfig.nvim",
+      "b0o/schemastore.nvim",
       {
         "hrsh7th/cmp-nvim-lsp",
         cond = function()
@@ -98,13 +110,7 @@ return {
         on_attach(client, buffer)
       end)
 
-      -- get all the servers that are available thourgh mason-lspconfig
-      local have_mason, mlsp = pcall(require, "mason-lspconfig")
-      local all_mslp_servers = {}
-      if have_mason then
-        all_mslp_servers = vim.tbl_keys(require("mason-lspconfig").get_mappings().lspconfig_to_package)
-      end
-
+      -- 构建 capabilities (包含 cmp_nvim_lsp)
       local capabilities = vim.tbl_deep_extend(
         "force",
         {},
@@ -113,28 +119,39 @@ return {
         opts.capabilities or {}
       )
 
-      local function setup(server)
-        local server_opts = vim.tbl_deep_extend("force", {
-          capabilities = vim.deepcopy(capabilities),
-        }, opts.servers[server] or {})
-
-        local lspconfig = require("lspconfig")
-        lspconfig[server].setup(server_opts)
+      -- 获取 mason-lspconfig 支持的服务器列表
+      local have_mason, mlsp = pcall(require, "mason-lspconfig")
+      local all_mslp_servers = {}
+      if have_mason then
+        all_mslp_servers = vim.tbl_keys(mlsp.get_mappings().lspconfig_to_package)
       end
 
       local ensure_installed = {}
       for server, server_opts in pairs(opts.servers) do
         server_opts = server_opts == true and {} or server_opts
-        -- run manual setup if mason=false or if this is a server that cannot be installed with mason-lspconfig
+
+        -- 合并 capabilities 和服务器特定配置
+        local final_opts = vim.tbl_deep_extend("force", {
+          capabilities = vim.deepcopy(capabilities),
+        }, server_opts)
+
+        -- 使用 vim.lsp.config() 配置服务器 (Neovim 0.11+ API)
+        vim.lsp.config(server, final_opts)
+
         if server_opts.mason == false or not vim.tbl_contains(all_mslp_servers, server) then
-          setup(server)
+          -- 非 mason 管理的服务器，手动启用
+          vim.lsp.enable(server)
         else
           ensure_installed[#ensure_installed + 1] = server
         end
+      end
 
-        if have_mason then
-          mlsp.setup({ ensure_installed = ensure_installed, handlers = { setup } })
-        end
+      -- mason-lspconfig 负责安装和自动启用 mason 管理的服务器
+      if have_mason then
+        mlsp.setup({
+          ensure_installed = ensure_installed,
+          automatic_enable = true,
+        })
       end
     end,
   },
@@ -185,3 +202,4 @@ return {
     end,
   },
 }
+
