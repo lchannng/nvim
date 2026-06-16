@@ -1,8 +1,8 @@
 local vim = vim
 local kopts = { noremap = true, silent = true }
 vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, kopts)
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, kopts)
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, kopts)
+vim.keymap.set("n", "[d", function() vim.diagnostic.jump({ count = -1 }) end, kopts)
+vim.keymap.set("n", "]d", function() vim.diagnostic.jump({ count = 1 }) end, kopts)
 vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist, kopts)
 
 -- Use an on_attach function to only map the following keys

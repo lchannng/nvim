@@ -266,15 +266,6 @@ return {
     },
   },
 
-  -- close buffer
-  {
-    "kazhala/close-buffers.nvim",
-    cmd = "BDelete",
-    keys = {
-      { "<leader>bd", "<CMD>BDelete this<CR>", desc = "Close current buffer" },
-      { "<leader>ba", "<CMD>BDelete all<CR>",  desc = "Close all buffers" },
-    },
-  },
 
   {
     "RaafatTurki/hex.nvim",

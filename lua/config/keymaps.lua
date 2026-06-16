@@ -38,6 +38,10 @@ keymap.set('n', '<leader>tn', '<cmd>tabnew<cr>/')
 keymap.set('n', '<leader>to', '<cmd>tabonly<cr>/')
 keymap.set('n', '<leader>tc', '<cmd>tabclose<cr>/')
 
+-- Close buffers
+keymap.set('n', '<leader>bd', '<cmd>bdelete<cr>', { desc = 'Close current buffer' })
+keymap.set('n', '<leader>ba', '<cmd>%bdelete<cr>', { desc = 'Close all buffers' })
+
 -- Delete trailing space
 keymap.set('n', '<F12>', [[:%s/\s\+$//e<cr>]])
 
