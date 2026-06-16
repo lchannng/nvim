@@ -38,7 +38,7 @@ if vim.env.VIM_IDE then
   servers = {
     bashls = {},
     clangd = {},
-    cmake = {},
+    neocmake = {},
     gopls = {},
     jsonls = {
       -- lazy-load schemastore when needed
